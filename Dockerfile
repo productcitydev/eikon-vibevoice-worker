@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-RUN pip3 install --no-cache-dir git+https://github.com/microsoft/VibeVoice.git
+RUN git clone --depth 1 https://github.com/microsoft/VibeVoice.git /vibevoice-src
+ENV PYTHONPATH=/vibevoice-src
 
 COPY handler.py .
 
