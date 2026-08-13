@@ -1,0 +1,4 @@
+vibevoice[streamingtts] @ git+https://github.com/microsoft/VibeVoice.git
+torchaudio==2.3.0
+soundfile
+runpod

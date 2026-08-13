@@ -1,5 +1,16 @@
-FROM registry.runpod.net/jords1755-vibevoice-main-dockerfile:abf3c5875
+FROM nvidia/cuda:12.2.0-runtime-ubuntu22.04
 
-COPY handler.py /handler.py
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /app
 
-CMD ["python", "/handler.py"]
+RUN apt-get update && apt-get install -y \
+    ffmpeg libsndfile1 git \
+    python3 python3-pip \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+COPY handler.py .
+
+CMD ["python3", "handler.py"]
