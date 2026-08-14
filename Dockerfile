@@ -17,6 +17,15 @@ ENV PYTHONPATH=/vibevoice-src
 RUN mkdir -p /voices && \
     cp /vibevoice-src/demo/voices/streaming_model/*.pt /voices/
 
-COPY handler.py .
+RUN cd /tmp && \
+    apt-get update && apt-get install -y wget && \
+    wget -q https://github.com/user-attachments/files/24189272/experimental_voices_en1.tar.gz && \
+    wget -q https://github.com/user-attachments/files/24189273/experimental_voices_en2.tar.gz && \
+    tar -xzf experimental_voices_en1.tar.gz -C /voices/ && \
+    tar -xzf experimental_voices_en2.tar.gz -C /voices/ && \
+    rm -f *.tar.gz && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY handler.py audition.py .
 
 CMD ["python3", "handler.py"]
