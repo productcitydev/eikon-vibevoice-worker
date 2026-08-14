@@ -3,6 +3,7 @@ import io
 import copy
 import base64
 import glob
+import tempfile
 import torch
 import runpod
 
@@ -79,10 +80,14 @@ def synthesize(text: str, voice_name: str) -> bytes:
     else:
         raise RuntimeError("Model returned no speech output")
 
-    buf = io.BytesIO()
-    processor.save_audio(audio, output_path=buf)
-    buf.seek(0)
-    return buf.read()
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
+        tmp_path = tmp.name
+    try:
+        processor.save_audio(audio, output_path=tmp_path)
+        with open(tmp_path, "rb") as f:
+            return f.read()
+    finally:
+        os.unlink(tmp_path)
 
 
 def handler(job):
