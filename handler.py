@@ -11,7 +11,7 @@ from vibevoice import (
     VibeVoiceStreamingProcessor,
 )
 
-MODEL_NAME = os.getenv("MODEL_NAME", "microsoft/VibeVoice-1.5B")
+MODEL_NAME = os.getenv("MODEL_NAME", "microsoft/VibeVoice-Realtime-0.5B")
 DEFAULT_LANGUAGE = os.getenv("LANGUAGE", "en")
 DEFAULT_VOICE = os.getenv("DEFAULT_VOICE", "en-Grace_woman")
 HF_TOKEN = os.getenv("HF_TOKEN", None)
