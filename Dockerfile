@@ -14,6 +14,9 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 RUN git clone --depth 1 https://github.com/microsoft/VibeVoice.git /vibevoice-src
 ENV PYTHONPATH=/vibevoice-src
 
+RUN mkdir -p /voices && \
+    cp /vibevoice-src/demo/voices/streaming_model/*.pt /voices/
+
 COPY handler.py .
 
 CMD ["python3", "handler.py"]
