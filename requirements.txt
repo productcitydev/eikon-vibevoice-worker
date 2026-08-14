@@ -1,5 +1,5 @@
-torch
-torchaudio
+torch==2.3.0
+torchaudio==2.3.0
 transformers==4.51.3
 accelerate
 numpy
