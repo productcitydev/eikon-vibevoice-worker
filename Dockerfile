@@ -28,4 +28,5 @@ RUN cd /tmp && \
 
 COPY handler.py audition.py .
 
-CMD ["python3", "handler.py"]
+ENV SCRIPT=handler.py
+CMD ["sh", "-c", "python3 $SCRIPT"]
