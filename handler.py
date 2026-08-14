@@ -10,8 +10,6 @@ from vibevoice import (
     VibeVoiceStreamingForConditionalGenerationInference,
     VibeVoiceStreamingProcessor,
 )
-from transformers.cache_utils import DynamicCache
-from transformers.modeling_outputs import BaseModelOutputWithPast
 
 MODEL_NAME = os.getenv("MODEL_NAME", "microsoft/VibeVoice-1.5B")
 DEFAULT_LANGUAGE = os.getenv("LANGUAGE", "en")
@@ -44,8 +42,7 @@ def load_voice(voice_name: str):
         available = [os.path.basename(f).replace(".pt", "") for f in glob.glob(os.path.join(VOICES_DIR, "*.pt"))]
         raise FileNotFoundError(f"Voice '{voice_name}' not found. Available: {available}")
 
-    with torch.serialization.safe_globals([BaseModelOutputWithPast, DynamicCache]):
-        prefilled = torch.load(pt_path, map_location=device, weights_only=True)
+    prefilled = torch.load(pt_path, map_location=device, weights_only=False)
 
     voice_cache[voice_name] = prefilled
     print(f"[VibeVoice] Loaded voice: {voice_name}")
