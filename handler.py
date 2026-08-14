@@ -24,9 +24,12 @@ print(f"[VibeVoice] Loading model '{MODEL_NAME}' on {device}...")
 model = VibeVoiceStreamingForConditionalGenerationInference.from_pretrained(
     MODEL_NAME,
     torch_dtype=torch.bfloat16,
+    device_map="cuda",
+    attn_implementation="sdpa",
     token=HF_TOKEN,
-).to(device)
+)
 model.eval()
+model.set_ddpm_inference_steps(num_steps=5)
 
 processor = VibeVoiceStreamingProcessor.from_pretrained(MODEL_NAME, token=HF_TOKEN)
 print("[VibeVoice] Model loaded.")
