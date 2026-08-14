@@ -26,7 +26,8 @@ RUN cd /tmp && \
     rm -f *.tar.gz && \
     rm -rf /var/lib/apt/lists/*
 
-COPY handler.py audition.py .
+COPY scripts/ /scripts/
+COPY handler.py audition.py batch.py .
 
 ENV SCRIPT=handler.py
 CMD ["sh", "-c", "python3 $SCRIPT"]
